@@ -1,4 +1,4 @@
-const {merge} = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const path = require("path");
 const baseConfig = require("./client.base");
 const env = require("../env")();

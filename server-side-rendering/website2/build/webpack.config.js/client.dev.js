@@ -1,6 +1,6 @@
 const webpack = require("webpack");
 
-const {merge} = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const baseConfig = require("./client.base");
 
 const config = merge(baseConfig, {

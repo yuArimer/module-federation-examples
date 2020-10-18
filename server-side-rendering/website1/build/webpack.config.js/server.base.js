@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const {merge} = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const fs = require("fs");
 const ModuleFederationPlugin = require("webpack").container
   .ModuleFederationPlugin;
@@ -11,15 +11,17 @@ const config = require("../config");
 
 const { serverPath } = config[process.env.NODE_ENV || "development"];
 const remotePath = path.resolve(
-    __dirname,
-    "../../../website2/buildServer/container.js"
-)
-const deps = require('../../package.json').dependencies
+  __dirname,
+  "../../../website2/buildServer/container.js"
+);
+const deps = require("../../package.json").dependencies;
 
 module.exports = merge(common, {
   name: "server",
   target: "async-node",
-  entry: ["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],
+  entry: {
+    main: ["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],
+  },
   output: {
     path: serverPath,
     filename: "[name].js",
@@ -40,13 +42,13 @@ module.exports = merge(common, {
       library: { type: "commonjs2" },
       filename: "container.js",
       remotes: {
-        website2: remotePath
+        website2: remotePath,
         // website2: {
         //   // we dont need to do this, just intersting to see in action
         //   external: `promise new Promise((resolve)=>{ console.log('requring remote');delete require.cache['${remotePath}']; resolve(require('${remotePath}')) })`
         // },
       },
-      shared: [{"react":deps.react, "react-dom":deps["react-dom"]}],
+      shared: [{ react: deps.react, "react-dom": deps["react-dom"] }],
     }),
   ],
   stats: {

@@ -1,5 +1,5 @@
 const path = require("path");
-const {merge} = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const fs = require("fs");
 const webpack = require("webpack");
 const ModuleFederationPlugin = require("@module-federation/remote-federation-plugin/plugin/ModuleFederationPlugin");
