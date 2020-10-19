@@ -13,11 +13,11 @@ module.exports = async (express, app, done) => {
     "/static",
     express.static(path.join(__dirname, "../buildClient/static"))
   );
-  try {
-    fetch("http://localhost:3001/restart");
-  } catch (e) {
-    console.error(e);
-  }
+  // try {
+  //   fetch("http://localhost:3001/restart");
+  // } catch (e) {
+  //   console.error(e);
+  // }
 
   const rederThunk = require("../../server-entry").default; // eslint-disable-line import/no-unresolved
   const clientStats = JSON.parse(

@@ -25,7 +25,6 @@ module.exports = merge(common, {
   output: {
     path: serverPath,
     filename: "[name].js",
-    libraryTarget: "commonjs2",
   },
   externals: ["enhanced-resolve"],
   module: {
@@ -36,17 +35,15 @@ module.exports = merge(common, {
   },
   plugins: [
     ...plugins.server,
-    new webpack.HotModuleReplacementPlugin(),
     new ModuleFederationPlugin({
       name: "website1",
-      library: { type: "commonjs2" },
       filename: "container.js",
       remotes: {
-        website2: remotePath,
-        // website2: {
-        //   // we dont need to do this, just intersting to see in action
-        //   external: `promise new Promise((resolve)=>{ console.log('requring remote');delete require.cache['${remotePath}']; resolve(require('${remotePath}')) })`
-        // },
+        website2: {
+          external: remotePath,
+          // we dont need to do this, just intersting to see in action
+          // external: `promise new Promise((resolve)=>{ console.log('requring remote'); require('${remotePath}'); resolve(require('${remotePath}')) })`
+        },
       },
       shared: [{ react: deps.react, "react-dom": deps["react-dom"] }],
     }),

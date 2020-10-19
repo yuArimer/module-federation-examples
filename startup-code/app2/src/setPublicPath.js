@@ -8,5 +8,5 @@ console.log(
 // For now, we need to re-export the container to the scope.
 // you could use webpack internals to make this more dynamic, bue we will likely provide a internalized solution to attach a startup module
 Object.assign(self, {
-  app2: __webpack_require__("webpack/container/entry/app2"),
+  app2: c,
 });

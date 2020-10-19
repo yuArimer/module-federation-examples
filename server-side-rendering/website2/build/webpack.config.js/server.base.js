@@ -16,12 +16,11 @@ module.exports = merge(common, {
   target: "async-node",
   entry: {
     main: ["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],
-    website2: path.resolve(__dirname, "../../server/startup.js"),
+    // website2: path.resolve(__dirname, "../../server/startup.js"),
   },
   output: {
     path: serverPath,
     filename: "[name].js",
-    libraryTarget: "commonjs2",
   },
   externals: ["enhanced-resolve"],
   module: {
@@ -32,11 +31,13 @@ module.exports = merge(common, {
   },
   plugins: [
     ...plugins.server,
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      REMOTE_NAME: JSON.stringify("website2"),
+    }),
     new ModuleFederationPlugin({
       name: "website2",
-      library: { type: "commonjs2" },
       filename: "container.js",
+      library: { type: "commonjs-module" },
       exposes: {
         "./SomeComponent": "./src/components/SomeComponent",
       },
