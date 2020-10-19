@@ -38,6 +38,7 @@ module.exports = merge(common, {
     new ModuleFederationPlugin({
       name: "website1",
       filename: "container.js",
+      remoteType: "commonjs-module",
       remotes: {
         website2: {
           external: remotePath,
