@@ -41,9 +41,9 @@ module.exports = merge(common, {
       remoteType: "commonjs-module",
       remotes: {
         website2: {
-          external: remotePath,
+          // external: remotePath,
           // we dont need to do this, just intersting to see in action
-          // external: `promise new Promise((resolve)=>{ console.log('requring remote'); require('${remotePath}'); resolve(require('${remotePath}')) })`
+          external: `promise new Promise((resolve)=>{ console.log('requring remote'); require('${remotePath}'); resolve(require('${remotePath}')) })`,
         },
       },
       shared: [{ react: deps.react, "react-dom": deps["react-dom"] }],
