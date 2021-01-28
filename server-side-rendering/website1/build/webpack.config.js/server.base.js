@@ -4,6 +4,7 @@ const {merge} = require("webpack-merge");
 const fs = require("fs");
 const ModuleFederationPlugin = require("webpack").container
   .ModuleFederationPlugin;
+const SuspenseModulesPlugin = require('../SuspenseModulesPlugin')
 const common = require("./common.base");
 const { server: serverLoaders } = require("./loaders");
 const plugins = require("./plugins");
@@ -19,7 +20,7 @@ const deps = require('../../package.json').dependencies
 module.exports = merge(common, {
   name: "server",
   target: "async-node",
-  entry: ["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],
+  entry: {main:["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],'website1':'/routes-virtual-entry.js'},
   output: {
     path: serverPath,
     filename: "[name].js",
@@ -34,6 +35,7 @@ module.exports = merge(common, {
   },
   plugins: [
     ...plugins.server,
+    new SuspenseModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ModuleFederationPlugin({
       name: "website1",

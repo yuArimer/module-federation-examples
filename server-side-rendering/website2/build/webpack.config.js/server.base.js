@@ -10,11 +10,11 @@ const plugins = require("./plugins");
 const config = require("../config");
 const deps = require('../../package.json').dependencies
 const { serverPath } = config[process.env.NODE_ENV || "development"];
-
+const SuspenseModulesPlugin = require('../SuspenseModulesPlugin.js');
 module.exports = merge(common, {
   name: "server",
   target: "async-node",
-  entry: ["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],
+  entry: {main:["@babel/polyfill", path.resolve(__dirname, "../../server/index.js")],'website2':'/routes-virtual-entry.js'},
   output: {
     path: serverPath,
     filename: "[name].js",
@@ -28,6 +28,7 @@ module.exports = merge(common, {
     minimize: false,
   },
   plugins: [
+   new SuspenseModulesPlugin(),
     ...plugins.server,
     new webpack.HotModuleReplacementPlugin(),
     new ModuleFederationPlugin({
